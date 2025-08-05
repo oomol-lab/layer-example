@@ -1,0 +1,39 @@
+nodes:
+  - node_id: +python#1
+    title: "Python #1"
+    icon: ":logos:python:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        []
+      outputs_def:
+        - handle: output
+          json_schema:
+            {}
+      executor:
+        name: python
+        options:
+          entry: scriptlets/+scriptlet#1.py
+  - node_id: +typescript#1
+    title: "TypeScript #1"
+    icon: ":skill-icons:typescript:"
+    task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: output
+          json_schema:
+            {}
+          nullable: false
+      outputs_def:
+        []
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+scriptlet#1.ts
+    inputs_from:
+      - handle: output
+        from_node:
+          - node_id: +python#1
+            output_handle: output
