@@ -5,3 +5,7 @@ scripts:
   bootstrap: |
     npm install
     poetry install --no-root
+name: layer-example
+repository: https://github.com/oomol/ovmlayer-rootfs
+displayName: layer-example
+description: layer-example
