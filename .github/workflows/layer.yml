@@ -1,0 +1,24 @@
+name: export layer
+on:
+  pull_request:
+  push:
+    tags:
+      - 'v*.*.*'
+
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  export-layer:
+    permissions:
+      contents: read
+      id-token: write
+
+    uses: oomol/ovmlayer-rootfs/.github/workflows/export-package-layer.yml@main
+    with:
+      package-name: "layer-example"
+      version: "0.0.1"
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
