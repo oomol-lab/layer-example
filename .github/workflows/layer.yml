@@ -1,6 +1,5 @@
 name: export layer
 on:
-  pull_request:
   push:
     tags:
       - 'v*.*.*'
