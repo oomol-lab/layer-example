@@ -11,7 +11,8 @@ class Outputs(typing.TypedDict):
 def main(params: Inputs, context: Context) -> Outputs:
 
     p = pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+    context.preview(p)
 
     return {
-      "output": p
+      "output": "python"
     }

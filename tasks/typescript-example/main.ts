@@ -1,6 +1,5 @@
 //#region generated meta
 type Inputs = {
-    input: any;
 };
 type Outputs = {
     output: string;
@@ -15,6 +14,6 @@ export default async function(
 ): Promise<Partial<Outputs> | undefined | void> {
     console.log(merge);
     return {
-        "output": "merge"
+        "output": "typescript"
     }
 };

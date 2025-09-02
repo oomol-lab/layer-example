@@ -1,0 +1,10 @@
+executor:
+  name: nodejs
+  options:
+    entry: main.js
+inputs_def:
+  []
+outputs_def:
+  - handle: output
+    json_schema:
+      type: string
