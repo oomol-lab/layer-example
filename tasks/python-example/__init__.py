@@ -2,8 +2,7 @@ from oocana import Context
 import pandas as pd
 #region generated meta
 import typing
-class Inputs(typing.TypedDict):
-    input: str
+Inputs = typing.Dict[str, typing.Any]
 class Outputs(typing.TypedDict):
     output: typing.Any
 #endregion

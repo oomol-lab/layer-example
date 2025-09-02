@@ -3,9 +3,7 @@ executor:
   options:
     entry: __init__.py
 inputs_def:
-  - handle: input
-    json_schema:
-      type: string
+  []
 outputs_def:
   - handle: output
     json_schema:
