@@ -6,6 +6,6 @@ scripts:
     npm install
     poetry install --no-root
 name: layer-example
-repository: https://github.com/oomol/ovmlayer-rootfs
+repository: https://github.com/oomol-lab/layer-example/
 displayName: layer-example
 description: layer-example
