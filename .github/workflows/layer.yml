@@ -77,16 +77,3 @@ jobs:
       - name: Publish OOMOL Package
         uses: oomol-lab/oopm-publish-action@main
         if: needs.package.outputs.is-publish == 'false'
-
-  export-layer:
-    needs: [package, publish]
-    permissions:
-      contents: read
-      id-token: write
-
-    uses: oomol/ovmlayer-rootfs/.github/workflows/export-package-layer.yml@main
-    with:
-      package-name: ${{ needs.package.outputs.name }}
-      version: "${{ needs.package.outputs.version }}"
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
