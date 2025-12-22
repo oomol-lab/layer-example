@@ -1,6 +1,6 @@
 [project]
 name = "layer-example"
-version = "0.1.0"
+version = "0.1.8"
 description = ""
 authors = [
     {name = "leavesster",email = "11785335+leavesster@users.noreply.github.com"}
