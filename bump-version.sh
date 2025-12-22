@@ -11,9 +11,9 @@ NC='\033[0m' # No Color
 usage() {
     echo "Usage: $0 <patch|minor|major|version> [--yes]"
     echo "Examples:"
-    echo "  $0 patch        # 0.1.9 → 0.1.10 (需要确认)"
-    echo "  $0 minor --yes  # 0.1.9 → 0.2.0 (跳过确认)"
-    echo "  $0 major        # 0.1.9 → 1.0.0"
+    echo "  $0 patch        # 0.1.0 → 0.1.1 (需要确认)"
+    echo "  $0 minor --yes  # 0.1.0 → 0.2.0 (跳过确认)"
+    echo "  $0 major        # 0.1.0 → 1.0.0"
     echo "  $0 0.2.5 --yes  # 直接指定版本号"
     exit 1
 }
@@ -34,7 +34,8 @@ if [ $# -eq 2 ]; then
         usage
     fi
 fi
-VERSION_FILE="pyproject.toml"
+VERSION_FILE="package.oo.yaml"
+VERSION_FILE_SECONDARY="pyproject.toml"
 
 # 检查工作区是否干净
 if [ -n "$(git status --porcelain)" ]; then
@@ -43,8 +44,8 @@ if [ -n "$(git status --porcelain)" ]; then
     exit 1
 fi
 
-# 读取当前版本
-CURRENT_VERSION=$(grep -E '^version = ' "$VERSION_FILE" | cut -d'"' -f2)
+# 读取当前版本 (从 package.oo.yaml)
+CURRENT_VERSION=$(grep -E '^version:' "$VERSION_FILE" | awk '{print $2}')
 
 if [ -z "$CURRENT_VERSION" ]; then
     echo -e "${RED}错误: 无法从 $VERSION_FILE 读取当前版本${NC}"
@@ -96,12 +97,16 @@ fi
 
 # 1. 更新版本号
 echo -e "${GREEN}[1/4] 更新版本号...${NC}"
-sed -i.bak "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" "$VERSION_FILE"
+# 更新 package.oo.yaml (主版本文件)
+sed -i.bak "s/^version: $CURRENT_VERSION$/version: $NEW_VERSION/" "$VERSION_FILE"
 rm -f "$VERSION_FILE.bak"
+# 更新 pyproject.toml (次要版本文件)
+sed -i.bak "s/version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" "$VERSION_FILE_SECONDARY"
+rm -f "$VERSION_FILE_SECONDARY.bak"
 
 # 2. 提交变更
 echo -e "${GREEN}[2/4] 提交变更...${NC}"
-git add "$VERSION_FILE"
+git add "$VERSION_FILE" "$VERSION_FILE_SECONDARY"
 git commit -m "$(cat <<EOF
 Bump version from $CURRENT_VERSION to $NEW_VERSION
 
